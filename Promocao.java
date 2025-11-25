@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Promocao {
 
+    private static long contador = 1;
     private long id;
     private String titulo;
     private String descricao;
@@ -11,11 +12,19 @@ public class Promocao {
     private Date dataInicio;
     private Date dataFim;
     private String linkDestino;
-    private boolean isAtiva;
+
+    public Promocao(String titulo, String descricao, String imagemUrl, Date inicio, Date fim, String linkDestino) {
+        this.id = contador++;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.imagemUrl = imagemUrl;
+        this.dataInicio = inicio;
+        this.dataFim = fim;
+        this.linkDestino = linkDestino;
+    }
 
     public boolean isAtiva() {
         Date now = new Date();
         return now.after(dataInicio) && now.before(dataFim);
     }
 }
-

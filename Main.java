@@ -1,36 +1,32 @@
 package Suculentas;
 
-import java.util.Date;
-
 public class Main {
     public static void main(String[] args) {
 
-        // Serviço de notificação
-        Notificador notificador = new ServicoWhatsApp();
+        CategoriaProduto categoria = new CategoriaProduto("Suculentas", "Plantas pequenas e resistentes");
 
-        // Produto e categoria
-        CategoriaProduto categoria = new CategoriaProduto();
-        Produto produto = new Produto();
+        Produto produto = new Produto("Echeveria", "Suculenta verde linda", 15.50, categoria);
 
-        // Orcamento
-        Orcamento orcamento = new Orcamento(notificador);
-        orcamento.solicitar();
+        ServicoWhatsApp whatsapp = new ServicoWhatsApp();
 
-        // Depoimento
-        Depoimento depoimento = new Depoimento();
-        depoimento.submeter();
+        Orcamento orc = new Orcamento(
+            "Marcos",
+            "email@email.com",
+            "1199999999",
+            3,
+            "Entrega rápida se possível",
+            produto,
+            whatsapp
+        );
 
-        // Administrador
-        Administrador admin = new Administrador();
-        admin.revisarDepoimento(depoimento, StatusDepoimento.APROVADO);
+        orc.solicitar();
 
-        // Artigo
-        Artigo artigo = new Artigo();
-        artigo.publicar();
+        Depoimento d = new Depoimento("João", "j@x.com", "11999999", "Adorei minhas plantas!");
+        d.submeter();
 
-        // Promoção
-        Promocao promo = new Promocao();
-        System.out.println("Promoção ativa? " + promo.isAtiva());
+        Administrador adm = new Administrador(1, "Admin", "admin@mail.com", "123");
+        adm.revisarDepoimento(d, Depoimento.StatusDepoimento.APROVADO);
+
+        System.out.println("Sistema finalizado.");
     }
 }
-

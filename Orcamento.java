@@ -1,42 +1,40 @@
 package Suculentas;
 
-import java.util.Date;
-
 public class Orcamento {
 
+    private static long contador = 1;
     private long id;
     private String nomeCliente;
     private String emailCliente;
     private String telefoneCliente;
     private int quantidade;
     private String observacoes;
-    private Date dataSolicitacao = new Date();
     private Produto produto;
-    private StatusOrcamento status = StatusOrcamento.PENDENTE;
-
     private Notificador notificador;
-    
-    public enum StatusOrcamento {
-        PENDENTE, RESPONDIDO, CANCELADO
-    }
 
-    public Orcamento(Notificador notificador) {
-        this.notificador = notificador;
+    public Orcamento(String nome, String email, String tel, int quantidade, String obs, Produto produto, Notificador n) {
+        this.id = contador++;
+        this.nomeCliente = nome;
+        this.emailCliente = email;
+        this.telefoneCliente = tel;
+        this.quantidade = quantidade;
+        this.observacoes = obs;
+        this.produto = produto;
+        this.notificador = n;
     }
 
     public boolean solicitar() {
-        this.status = StatusOrcamento.PENDENTE;
+        double valor = produto.isDisponivel() ? produto.getDetalhes().contains("Preço: R$") ? produto.precoBase * quantidade : 0 : 0;
 
-        // Aqui simularia salvar no banco
-        System.out.println("Orçamento salvo.");
+        System.out.println("Enviando orçamento...");
+        System.out.println("Cliente: " + nomeCliente);
+        System.out.println("Telefone: " + telefoneCliente);
+        System.out.println("Produto: " + produto.getDetalhes());
+        System.out.println("Quantidade: " + quantidade);
+        System.out.println("Valor total: R$ " + (produto.precoBase * quantidade));
 
-        // Notificando administrador
-        notificador.enviarMensagem(
-            "Novo orçamento solicitado por " + nomeCliente,
-            "ADMIN_WHATSAPP"
-        );
+        notificador.enviarMensagem("Seu orçamento foi gerado!", telefoneCliente);
 
         return true;
     }
 }
-

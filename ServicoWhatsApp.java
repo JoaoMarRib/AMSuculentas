@@ -6,4 +6,3 @@ public class ServicoWhatsApp implements Notificador {
         System.out.println("Enviando WhatsApp para " + destinatario + ": " + mensagem);
     }
 }
-
